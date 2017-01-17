@@ -15,10 +15,13 @@
 # include "libft.h"
 # include "mlx.h"
 # include <math.h>
-# define WIDTH 512
-# define HEIGHT 384
+# define WIDTH 800//512
+# define HEIGHT 640//384
 # define mapWidth 24
 # define mapHeight 24
+# define TRAN_H	0x01
+# define TRAN_V	0x02
+# define SIGN	0x04
 
 typedef struct		s_vec2
 {
@@ -69,10 +72,13 @@ typedef struct		s_env
 int	main(void);
 t_env	*init_environment(void);
 t_img	*init_image(t_env *e);
-void    verLine(t_env *e, int x, int drawStart, int drawEnd, unsigned char color);
-void    draw_lines_y(t_env *e, t_vec2 *p1, t_vec2 * p2, unsigned char color);
-void    put_pixel_img(t_env *e, int i, int j, unsigned char color);
+void    verLine(t_env *e, int x, int drawStart, int drawEnd, int color);
+void    draw_lines_y(t_env *e, t_vec2 *p1, t_vec2 * p2, int color);
+void    put_pixel_img(t_env *e, int i, int j, int color);
 t_line	*get_line_params_y(t_env *e, t_vec2 *p1, t_vec2 *p2);
-void my_key_pressed(int k, t_env *e);
+int my_key_pressed(int k, t_env *e);
+int redraw_game(t_env *e);
+int expose_hook(t_env *e);
+int		my_loop_hook(t_env *e);
 
 #endif

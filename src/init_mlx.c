@@ -33,6 +33,7 @@ t_env	*init_environment(void)
 	e->mlx = mlx_init();
 	mlx_do_key_autorepeatoff(e->mlx);
 	e->win = mlx_new_window(e->mlx, WIDTH, HEIGHT, "Wolf_3D");
+	e->flags = 0;
 	e->img = init_image(e);
 	return (e);
 }

@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-void verLine(t_env *e, int x, int drawStart, int drawEnd, unsigned char color)
+void verLine(t_env *e, int x, int drawStart, int drawEnd, int color)
 {
 	t_vec2	*p1;
 	t_vec2	*p2;
@@ -42,17 +42,17 @@ t_line	*get_line_params_y(t_env *e, t_vec2 *p1, t_vec2 *p2)
 	return (data);
 }
 
-void	draw_lines_y(t_env *e, t_vec2 *p1, t_vec2 *p2, unsigned char color)
+void	draw_lines_y(t_env *e, t_vec2 *p1, t_vec2 *p2, int color)
 {
 	t_line	*d;
 
 	d = get_line_params_y(e, p1, p2);
-	mlx_pixel_put(e->mlx, e->win, d->j, d->i, color);
-	// put_pixel_img(e, d->j, d->i, color);
+	// mlx_pixel_put(e->mlx, e->win, d->j, d->i, color);
+	put_pixel_img(e, d->j, d->i, color);
 	while (d->i < d->end->y)
 	{
 		mlx_pixel_put(e->mlx, e->win, d->j, d->i, color);
-		// put_pixel_img(e, d->j, d->i, color);
+		put_pixel_img(e, d->j, d->i, color);
 		if (d->p < 0)
 			d->p += (2 * d->dx);
 		else
@@ -66,7 +66,7 @@ void	draw_lines_y(t_env *e, t_vec2 *p1, t_vec2 *p2, unsigned char color)
 
 }
 
-void put_pixel_img(t_env *e, int i, int j, unsigned char color)
+void put_pixel_img(t_env *e, int i, int j, int color)
 {
 	int	p;
 	p = (i * 4) + (j * e->img->size_line);

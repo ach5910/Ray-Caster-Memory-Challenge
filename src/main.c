@@ -50,7 +50,23 @@ int	main(void)
 	e->dirX = -1;
 	e->dirY = 0; //initial direction vector
 	e->planeX = 0;
-	e->planeY = 0.66; //the 2d raycaster version of camera plane
+	e->planeY = 0.66;
+	redraw_game(e);
+	mlx_expose_hook(e->win, expose_hook, e);
+	mlx_hook(e->win, 2, 0, my_key_pressed, e);
+	mlx_loop_hook(e->mlx, my_loop_hook, e);
+	mlx_loop(e->mlx);
+	return (0);
+}
+
+int redraw_game(t_env *e)
+{
+	// e->posX = 22;
+	// e->posY = 20;  //x and y start position
+	// e->dirX = -1;
+	// e->dirY = 0; //initial direction vector
+	// e->planeX = 0;
+	// e->planeY = 0.66; //the 2d raycaster version of camera plane
 	int x;
 
 	double time = 0; //time of current frame
@@ -139,108 +155,146 @@ int	main(void)
 		if(drawEnd >= HEIGHT)drawEnd = HEIGHT - 1;
 
 		//choose wall color
-		unsigned char color = 0;
+		int color = 0;
 		switch(worldMap[mapX][mapY])
 		{
-			case 1:  color |= 0xFF0000;  break; //red
-			case 2:  color |= 0xFF00;  break; //green
-			case 3:  color |= 0xFF;   break; //blue
-			case 4:  color |= 0xFFFFFF ;  break; //white
-			default: color |= 0xFFFF; break; //yellow
+			case 1:  color = side == 1 ? 0x7F0000 : 0xFF0000;  break; //red
+			case 2:  color = side == 1 ? 0x7F00 : 0xFF00;  break; //green
+			case 3:  color = side == 1 ? 0x7F : 0xFF;   break; //blue
+			case 4:  color = side == 1 ? 0x7F7F7F : 0xFFFFFF ;  break; //white
+			default: color = side == 1 ? 0x7F7F : 0xFFFF; break; //yellow
 		}
 
 		//give x and y sides different brightness
-		if (side == 1) {color = color / 2;}
+		// int r;
+		// int g;
+		// int b;
+		// if (side == 1)
+		// {
+		// 	r = color & 0xFF0000;
+		// 	g = color & 0xFF00;
+		// 	b = color & 0xFF;
+		// 	color = 0;
+		// 	color |= (r / 2) | (g / 2) | (b / 2);
+		// }
 
 		//draw the pixels of the stripe as a vertical line
-		mlx_clear_window(e->mlx, e->win);
+		// mlx_clear_window(e->mlx, e->win);
 		verLine(e, x, drawStart, drawEnd, color);
-		// mlx_put_image_to_window(e->mlx, e->win, e->img->i_ptr, 0, 0);
-		// mlx_destroy_image(e->mlx, e->img->i_ptr);
-		// e->img->i_ptr = mlx_new_image(e->mlx, WIDTH, HEIGHT);
 		x++;
 		//timing for input and FPS counter
-		oldTime = time;
-		time = getTicks();
-		double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
-		printf("FPS= %f\n",1.0 / frameTime); //FPS counter
+		// oldTime = time;
+		// time = getTicks();
+		double frameTime = 0.016667;//= (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
+		// printf("FPS= %f  %d\n",1.0 / frameTime, x); //FPS counter
 		// redraw();
 		// cls();
-		//
+
 		//speed modifiers
-		e->moveSpeed = frameTime * 5.0; //the constant value is in squares/second
-		e->rotSpeed = frameTime * 3.0; //the constant value is in radians/second
-		// readKeys();
-		// //move forward if no wall in front of you
-		// if (keyDown(SDLK_UP))
-		// {
-		//   if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
-		//   if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
-		// }
-		// //move backwards if no wall behind you
-		// if (keyDown(SDLK_DOWN))
-		// {
-		//   if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
-		//   if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
-		// }
-		// //rotate to the right
-		// if (keyDown(SDLK_RIGHT))
-		// {
-		//   //both camera direction and camera plane must be rotated
-		//   double oldDirX = dirX;
-		//   dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
-		//   dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
-		//   double oldPlaneX = planeX;
-		//   planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-		//   planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
-		// }
-		// //rotate to the left
-		// if (keyDown(SDLK_LEFT))
-		// {
-		//   //both camera direction and camera plane must be rotated
-		//   double oldDirX = dirX;
-		//   dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-		//   dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-		//   double oldPlaneX = planeX;
-		//   planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-		//   planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-		// }
+		e->moveSpeed = frameTime * 20.0; //the constant value is in squares/second
+		e->rotSpeed = frameTime * 7.0; //the constant value is in radians/second
 	}
-	mlx_hook(e->win, 2, 0, my_key_pressed, e);
-	mlx_loop(e->mlx);
+	mlx_put_image_to_window(e->mlx, e->win, e->img->i_ptr, 0, 0);
+	mlx_destroy_image(e->mlx, e->img->i_ptr);
+	e->img->i_ptr = mlx_new_image(e->mlx, WIDTH, HEIGHT);
 	return (0);
 }
 
-void my_key_pressed(int keycode, t_env *e)
+int expose_hook(t_env *e)
 {
-	if (keycode == 123)
+	redraw_game(e);
+	return (0);
+}
+
+int my_loop_hook(t_env *e)
+{
+	if (e->flags & SIGN)
+	{
+		if (e->flags & TRAN_V)
+		{
+			//both camera direction and camera plane must be rotated
+			double oldDirX = e->dirX;
+			double oldDirY = e->dirY;
+			e->dirX = oldDirX * cos(e->rotSpeed) - oldDirY * sin(e->rotSpeed);
+			e->dirY = oldDirX * sin(e->rotSpeed) + oldDirY * cos(e->rotSpeed);
+			double oldPlaneX = e->planeX;
+			double oldPlaneY = e->planeY;
+			e->planeX = oldPlaneX * cos(e->rotSpeed) - oldPlaneY * sin(e->rotSpeed);
+			e->planeY = oldPlaneX * sin(e->rotSpeed) + oldPlaneY * cos(e->rotSpeed);
+		}
+		else if (e->flags & TRAN_H)
+		{
+			if(worldMap[(int)(e->posX + e->dirX * e->moveSpeed)][(int)(e->posY)] == 0) e->posX += e->dirX * e->moveSpeed;
+			if(worldMap[(int)(e->posX)][(int)(e->posY + e->dirY * e->moveSpeed)] == 0) e->posY += e->dirY * e->moveSpeed;
+		}
+	}
+	else if (e->flags & TRAN_V)
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = e->dirX;
-		e->dirX = e->dirX * cos(-e->rotSpeed) - e->dirY * sin(-e->rotSpeed);
-		e->dirY = oldDirX * sin(-e->rotSpeed) + e->dirY * cos(-e->rotSpeed);
+		double oldDirY = e->dirY;
+		e->dirX = oldDirX * cos(-e->rotSpeed) - oldDirY * sin(-e->rotSpeed);
+		e->dirY = oldDirX * sin(-e->rotSpeed) + oldDirY * cos(-e->rotSpeed);
 		double oldPlaneX = e->planeX;
-		e->planeX = e->planeX * cos(-e->rotSpeed) - e->planeY * sin(-e->rotSpeed);
-		e->planeY = oldPlaneX * sin(-e->rotSpeed) + e->planeY * cos(-e->rotSpeed);
+		double oldPlaneY = e->planeY;
+		e->planeX = oldPlaneX * cos(-e->rotSpeed) - oldPlaneY * sin(-e->rotSpeed);
+		e->planeY = oldPlaneX * sin(-e->rotSpeed) + oldPlaneY * cos(-e->rotSpeed);
 	}
-	else if (keycode == 124)
-	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = e->dirX;
-		e->dirX = e->dirX * cos(e->rotSpeed) - e->dirY * sin(e->rotSpeed);
-		e->dirY = oldDirX * sin(e->rotSpeed) + e->dirY * cos(e->rotSpeed);
-		double oldPlaneX = e->planeX;
-		e->planeX = e->planeX * cos(e->rotSpeed) - e->planeY * sin(e->rotSpeed);
-		e->planeY = oldPlaneX * sin(e->rotSpeed) + e->planeY * cos(e->rotSpeed);
-	}
-	else if (keycode == 125)
-	{
-		if(worldMap[(int)(e->posX + e->dirX * e->moveSpeed)][(int)(e->posY)] == 0) e->posX += e->dirX * e->moveSpeed;
-		if(worldMap[(int)(e->posX)][(int)(e->posY + e->dirY * e->moveSpeed)] == 0) e->posY += e->dirY * e->moveSpeed;
-	}
-	else if (keycode == 126)
+	else if (e->flags & TRAN_H)
 	{
 		if(worldMap[(int)(e->posX - e->dirX * e->moveSpeed)][(int)(e->posY)] == 0) e->posX -= e->dirX * e->moveSpeed;
 		if(worldMap[(int)(e->posX)][(int)(e->posY - e->dirY * e->moveSpeed)] == 0) e->posY -= e->dirY * e->moveSpeed;
 	}
+	if (e->flags)
+	{
+		e->flags = 0;
+		redraw_game(e);
+	}
+	return (0);
+}
+int my_key_pressed(int keycode, t_env *e)
+{
+	if (keycode == 124)
+	{
+		e->flags |= TRAN_V;
+		//both camera direction and camera plane must be rotated
+		// double oldDirX = e->dirX;
+		// double oldDirY = e->dirY;
+		// e->dirX = oldDirX * cos(-e->rotSpeed) - oldDirY * sin(-e->rotSpeed);
+		// e->dirY = oldDirX * sin(-e->rotSpeed) + oldDirY * cos(-e->rotSpeed);
+		// double oldPlaneX = e->planeX;
+		// double oldPlaneY = e->planeY;
+		// e->planeX = oldPlaneX * cos(-e->rotSpeed) - oldPlaneY * sin(-e->rotSpeed);
+		// e->planeY = oldPlaneX * sin(-e->rotSpeed) + oldPlaneY * cos(-e->rotSpeed);
+		// redraw_game(e);
+	}
+	else if (keycode == 123)
+	{
+		e->flags |= TRAN_V | SIGN;
+		//both camera direction and camera plane must be rotated
+		// double oldDirX = e->dirX;
+		// double oldDirY = e->dirY;
+		// e->dirX = oldDirX * cos(e->rotSpeed) - oldDirY * sin(e->rotSpeed);
+		// e->dirY = oldDirX * sin(e->rotSpeed) + oldDirY * cos(e->rotSpeed);
+		// double oldPlaneX = e->planeX;
+		// double oldPlaneY = e->planeY;
+		// e->planeX = oldPlaneX * cos(e->rotSpeed) - oldPlaneY * sin(e->rotSpeed);
+		// e->planeY = oldPlaneX * sin(e->rotSpeed) + oldPlaneY * cos(e->rotSpeed);
+		// redraw_game(e);
+	}
+	else if (keycode == 126)
+	{
+		e->flags |= TRAN_H | SIGN;
+		// if(worldMap[(int)(e->posX + e->dirX * e->moveSpeed)][(int)(e->posY)] == 0) e->posX += e->dirX * e->moveSpeed;
+		// if(worldMap[(int)(e->posX)][(int)(e->posY + e->dirY * e->moveSpeed)] == 0) e->posY += e->dirY * e->moveSpeed;
+		// redraw_game(e);
+	}
+	else if (keycode == 125)
+	{
+		e->flags |= TRAN_H;
+		// if(worldMap[(int)(e->posX - e->dirX * e->moveSpeed)][(int)(e->posY)] == 0) e->posX -= e->dirX * e->moveSpeed;
+		// if(worldMap[(int)(e->posX)][(int)(e->posY - e->dirY * e->moveSpeed)] == 0) e->posY -= e->dirY * e->moveSpeed;
+		// redraw_game(e);
+	}
+	return (0);
 }
