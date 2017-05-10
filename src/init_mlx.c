@@ -25,6 +25,16 @@ t_img	*init_image(t_env *e)
 	return (img);
 }
 
+t_img	*init_legend(t_env *e)
+{
+	t_img *img;
+
+	img = (t_img*)malloc(sizeof(t_img));
+	img->i_ptr = mlx_new_image(e->mlx, MINIW, MINIH);
+	img->data = mlx_get_data_addr(img->i_ptr, &img->bpp, &img->size_line,
+		&img->endian);
+	return (img);
+}
 t_env	*init_environment(void)
 {
 	t_env			*e;

@@ -51,7 +51,7 @@ void	draw_lines_y(t_env *e, t_vec2 *p1, t_vec2 *p2, int color)
 	put_pixel_img(e, d->j, d->i, color);
 	while (d->i < d->end->y)
 	{
-		mlx_pixel_put(e->mlx, e->win, d->j, d->i, color);
+		// ßmlx_pixel_put(e->mlx, e->win, d->j, d->i, color);
 		put_pixel_img(e, d->j, d->i, color);
 		if (d->p < 0)
 			d->p += (2 * d->dx);
@@ -64,6 +64,29 @@ void	draw_lines_y(t_env *e, t_vec2 *p1, t_vec2 *p2, int color)
 	}
 	ft_memdel((void **)&d);
 
+}
+
+void draw_map(t_env *e,int wmap[24][24], t_map map)
+{
+	int i;
+	int j;
+
+	j = -1;
+	while (++j < mapHeight)
+	{
+		i = -1;
+		while (++i < mapWidth)
+		{		
+			if (wmap[j][i] != 0)
+				put_pixel_img_mini(e, i * 5, j * 5, 0xFFFFFF, 5);
+			else
+				put_pixel_img_mini(e, i * 5, j * 5, 0, 5);
+		}
+	}
+	put_pixel_img_mini(e, (int)(e->posY * 5),(int)(e->posX * 5), 0xFE00FF, 5);
+	mlx_put_image_to_window(e->mlx, e->win, e->img->i_ptr, 0, 0);
+	mlx_destroy_image(e->mlx, e->img->i_ptr);
+	e->img->i_ptr = mlx_new_image(e->mlx, WIDTH, HEIGHT);
 }
 
 void draw_buffer(t_env *e, unsigned int buf[640][800])
@@ -81,8 +104,22 @@ void draw_buffer(t_env *e, unsigned int buf[640][800])
 		}
 	}
 }
+void put_pixel_img_mini(t_env *e, int i, int j, int color, int n)
+{
+	if (n == 0)
+		return ;
+	int	p;
+	p = (i * 4) + (j * e->img->size_line);
+	e->img->data[p] = color & 0xFF;
+	e->img->data[++p] = (color >> 8) & 0xFF;
+	e->img->data[++p] = (color >> 16) & 0xFF;
+	put_pixel_img_mini(e, i + 1, j, color, n - 1);
+	put_pixel_img_mini(e, i, j + 1, color, n - 1);
+	put_pixel_img_mini(e, i + 1, j + 1, color, n - 1);
+}
 void put_pixel_img(t_env *e, int i, int j, int color)
 {
+
 	int	p;
 	p = (i * 4) + (j * e->img->size_line);
 	e->img->data[p] = color & 0xFF;
