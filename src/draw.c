@@ -66,6 +66,21 @@ void	draw_lines_y(t_env *e, t_vec2 *p1, t_vec2 *p2, int color)
 
 }
 
+void draw_buffer(t_env *e, unsigned int buf[640][800])
+{
+	int i;
+	int j;
+
+	j = -1;
+	while (++j < HEIGHT)
+	{
+		i = -1;
+		while (++i < WIDTH)
+		{
+			put_pixel_img(e, i, j, buf[j][i]);
+		}
+	}
+}
 void put_pixel_img(t_env *e, int i, int j, int color)
 {
 	int	p;

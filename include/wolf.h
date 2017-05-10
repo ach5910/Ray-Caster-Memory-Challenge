@@ -15,6 +15,10 @@
 # include "libft.h"
 # include "mlx.h"
 # include <math.h>
+#include <time.h>
+#include <stdio.h>
+// # include <mach/clock.h>
+// # include <mach/mach.h>
 # define WIDTH 800//512
 # define HEIGHT 640//384
 # define mapWidth 24
@@ -22,7 +26,7 @@
 # define TRAN_H	0x01
 # define TRAN_V	0x02
 # define SIGN	0x04
-
+unsigned int buffer[HEIGHT][WIDTH];
 typedef struct		s_vec2
 {
 	double			x;
@@ -61,13 +65,18 @@ typedef struct		s_env
 	unsigned int	flags;
 	double			posX;
 	int				past;
+	int				cur_sec;
 	double			posY;
 	double			dirX;
 	double			dirY;
+	double			old_time;
+	double			cur_time;
+	double			frame_time;
 	double			planeX;
 	double			planeY;
-	double			moveSpeed;
-	double			rotSpeed;
+	double			move_speed;
+	double			rot_speed;
+	double			fps;
 }					t_env;
 
 int	main(void);
@@ -81,5 +90,6 @@ int my_key_pressed(int k, t_env *e);
 int redraw_game(t_env *e);
 int expose_hook(t_env *e);
 int		my_loop_hook(t_env *e);
+void draw_buffer(t_env *e, unsigned int buf[640][800]);
 
 #endif
