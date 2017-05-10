@@ -39,6 +39,8 @@ int worldMap[mapWidth][mapHeight]=
   {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
+int colors[6] ={0, 0x7F0000, 0x7F00, 0x7F, 0x7F7F7F, 0x7F7F};
+int shade[6]= {0, 0xFF0000,  0xFF00, 0xFF, 0xFFFFFF, 0xFFFF};
 
 int	main(void)
 {
@@ -58,145 +60,147 @@ int	main(void)
 	mlx_loop(e->mlx);
 	return (0);
 }
-
-int redraw_game(t_env *e)
+typedef struct s_map
 {
-	// e->posX = 22;
-	// e->posY = 20;  //x and y start position
-	// e->dirX = -1;
-	// e->dirY = 0; //initial direction vector
-	// e->planeX = 0;
-	// e->planeY = 0.66; //the 2d raycaster version of camera plane
-	int x;
+	double	cameraX;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double 	delta_y;
+	double 	delta_x;
+	double	perp_wall_dist;
+	int		draw_start;
+	int		draw_end;
+	int		mapX;
+	int		mapY;
+	int		step_x;
+	int		step_y;
+	int		side;
+	int		hit;
+	int		color;
 
-	double time = 0; //time of current frame
-	double oldTime = 0; //time of previous frame
+}				t_map;
 
+double delta_dist_y(double ray_dir_y, double ray_dir_x)
+{
+	return (sqrt(1 + (ray_dir_x * ray_dir_x) / (ray_dir_y * ray_dir_y)));
+}
+double delta_dist_x(double ray_dir_y, double ray_dir_x)
+{
+	return (sqrt(1 + (ray_dir_y * ray_dir_y) / (ray_dir_x * ray_dir_x)));
+}
+t_map init_map(t_env *e, int x)
+{
+	t_map	map;
 
-	x = 0;
-	while (x < WIDTH)
+	map.cameraX = 2 * x / (double)WIDTH - 1; //x-coordinate in camera space
+	map.ray_dir_x = e->dirX + e->planeX * map.cameraX;
+	map.ray_dir_y = e->dirY + e->planeY * map.cameraX;
+	map.mapX = (int)e->posX;
+	map.mapY = (int)e->posY;
+	map.delta_y = delta_dist_y(map.ray_dir_y, map.ray_dir_x);
+	map.delta_x = delta_dist_x(map.ray_dir_y, map.ray_dir_x);
+	map.hit = 0; //was there a wall hit?
+	map.color = 0;
+	return (map);
+}
+
+t_map check_if_hit(t_map map)
+{
+	//jump to next map square, OR in x-direction, OR in y-direction
+	if (map.side_dist_x < map.side_dist_y)
 	{
-		//calculate ray position and direction
-		double cameraX = 2 * x / (double)WIDTH - 1; //x-coordinate in camera space
-		double rayPosX = e->posX;
-		double rayPosY = e->posY;
-		double rayDirX = e->dirX + e->planeX * cameraX;
-		double rayDirY = e->dirY + e->planeY * cameraX;
-		//which box of the map we're in
-		int mapX = (int)rayPosX;
-		int mapY = (int)rayPosY;
-
-		//length of ray from current position to next x or y-side
-		double sideDistX;
-		double sideDistY;
-
-		//length of ray from one x or y-side to next x or y-side
-		double deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
-		double deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
-		double perpWallDist;
-
-		//what direction to step in x or y-direction (either +1 or -1)
-		int stepX;
-		int stepY;
-
-		int hit = 0; //was there a wall hit?
-		int side; //was a NS or a EW wall hit?
-		//calculate step and initial sideDist
-		if (rayDirX < 0)
-		{
-			stepX = -1;
-			sideDistX = (rayPosX - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - rayPosX) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (rayPosY - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - rayPosY) * deltaDistY;
-		}
-		//perform DDA
-		while (hit == 0)
-		{
-			//jump to next map square, OR in x-direction, OR in y-direction
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			//Check if ray has hit a wall
-			if (worldMap[mapX][mapY] > 0) hit = 1;
-		}
-		//Calculate distance projected on camera direction (oblique distance will give fisheye effect!)
-		if (side == 0) perpWallDist = (mapX - rayPosX + (1 - stepX) / 2) / rayDirX;
-		else           perpWallDist = (mapY - rayPosY + (1 - stepY) / 2) / rayDirY;
-
-		//Calculate height of line to draw on screen
-		int lineHeight = (int)(HEIGHT / perpWallDist);
-
-		//calculate lowest and highest pixel to fill in current stripe
-		int drawStart = -lineHeight / 2 + HEIGHT / 2;
-		if(drawStart < 0)drawStart = 0;
-		int drawEnd = lineHeight / 2 + HEIGHT / 2;
-		if(drawEnd >= HEIGHT)drawEnd = HEIGHT - 1;
-
-		//choose wall color
-		int color = 0;
-		switch(worldMap[mapX][mapY])
-		{
-			case 1:  color = side == 1 ? 0x7F0000 : 0xFF0000;  break; //red
-			case 2:  color = side == 1 ? 0x7F00 : 0xFF00;  break; //green
-			case 3:  color = side == 1 ? 0x7F : 0xFF;   break; //blue
-			case 4:  color = side == 1 ? 0x7F7F7F : 0xFFFFFF ;  break; //white
-			default: color = side == 1 ? 0x7F7F : 0xFFFF; break; //yellow
-		}
-
-		//give x and y sides different brightness
-		// int r;
-		// int g;
-		// int b;
-		// if (side == 1)
-		// {
-		// 	r = color & 0xFF0000;
-		// 	g = color & 0xFF00;
-		// 	b = color & 0xFF;
-		// 	color = 0;
-		// 	color |= (r / 2) | (g / 2) | (b / 2);
-		// }
-
-		//draw the pixels of the stripe as a vertical line
-		// mlx_clear_window(e->mlx, e->win);
-		verLine(e, x, drawStart, drawEnd, color);
-		x++;
-		//timing for input and FPS counter
-		// oldTime = time;
-		// time = getTicks();
-		double frameTime = 0.016667;//= (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
-		// printf("FPS= %f  %d\n",1.0 / frameTime, x); //FPS counter
-		// redraw();
-		// cls();
-
-		//speed modifiers
-		e->moveSpeed = frameTime * 20.0; //the constant value is in squares/second
-		e->rotSpeed = frameTime * 7.0; //the constant value is in radians/second
+		map.side_dist_x += map.delta_x;
+		map.mapX += map.step_x;
+		map.side = 0;
 	}
+	else
+	{
+		map.side_dist_y += map.delta_y;
+		map.mapY += map.step_y;
+		map.side = 1;
+	}
+	//Check if ray has hit a wall
+	if (worldMap[map.mapX][map.mapY] > 0) map.hit = 1;
+	return (map);
+}
+
+t_map determine_line_size(t_map map)
+{
+	int line_height;
+
+	line_height = (int)(HEIGHT / map.perp_wall_dist);
+	map.draw_start = -line_height / 2 + HEIGHT / 2;
+	if(map.draw_start < 0)
+		map.draw_start = 0;
+	map.draw_end = line_height / 2 + HEIGHT / 2;
+	if(map.draw_end >= HEIGHT)
+		map.draw_end = HEIGHT - 1;
+	return (map);
+}
+
+double determine_wall_distance(t_env *e, t_map map)
+{
+	if (map.side == 0)
+		return ((map.mapX - e->posX + (1 - map.step_x) / 2) / map.ray_dir_x);
+	else
+		return ((map.mapY - e->posY + (1 - map.step_y) / 2) / map.ray_dir_y);
+}
+void draw_image(t_env *e)
+{
 	mlx_put_image_to_window(e->mlx, e->win, e->img->i_ptr, 0, 0);
 	mlx_destroy_image(e->mlx, e->img->i_ptr);
 	e->img->i_ptr = mlx_new_image(e->mlx, WIDTH, HEIGHT);
+}
+
+t_map calc_distances(t_env *e, t_map map)
+{
+	map.step_x = 1;
+	map.side_dist_x = (map.mapX + 1.0 - e->posX) * map.delta_x;
+	if (map.ray_dir_x < 0)
+	{
+		map.step_x = -1;
+		map.side_dist_x = (e->posX - map.mapX) * map.delta_x;
+	}
+	map.step_y = 1;
+	map.side_dist_y = (map.mapY + 1.0 - e->posY) * map.delta_y;
+	if (map.ray_dir_y < 0)
+	{
+		map.step_y = -1;
+		map.side_dist_y = (e->posY - map.mapY) * map.delta_y;
+	}
+	return (map);
+}
+// int tile = worldMap[map.mapX][map.mapY];
+		// if (tile == 6)
+		// 	tile = past
+		// past = ((past + 1) % 6);
+int redraw_game(t_env *e)
+{
+	static int past = 1;
+	t_map map;
+	int x;
+
+	x = -1;
+	while (++x < WIDTH)
+	{
+		map = init_map(e, x);
+		map = calc_distances(e, map);
+		while (map.hit == 0)
+			map = check_if_hit(map);
+		map.perp_wall_dist = determine_wall_distance(e, map);
+		map = determine_line_size(map);
+		if (map.side == 1)
+			map.color = colors[worldMap[map.mapX][map.mapY]];
+		else 
+			map.color = shade[worldMap[map.mapX][map.mapY]];
+		verLine(e, x, map.draw_start, map.draw_end, map.color);
+		// double frameTime = 0.016667;//= (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
+		e->moveSpeed = 0.016667 * 16.0; //the constant value is in squares/second
+		e->rotSpeed = 0.016667 * 8.0; //the constant value is in radians/second
+	}
+	draw_image(e);
 	return (0);
 }
 

@@ -60,6 +60,7 @@ typedef struct		s_env
 	double			zoom;
 	unsigned int	flags;
 	double			posX;
+	int				past;
 	double			posY;
 	double			dirX;
 	double			dirY;
