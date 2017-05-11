@@ -66,7 +66,7 @@ void	draw_lines_y(t_env *e, t_vec2 *p1, t_vec2 *p2, int color)
 
 }
 
-void draw_map(t_env *e,int wmap[24][24], t_map map)
+void draw_map(t_env *e, t_map map)
 {
 	int i;
 	int j;
@@ -78,15 +78,15 @@ void draw_map(t_env *e,int wmap[24][24], t_map map)
 		i = -1;
 		while (++i < mapHeight)
 		{	
-			col = wmap[j][i];
-			if (col > 4 && values[col - 5] == -1)
+			col = e->world_map[j][i];
+			if (col > 4 && e->values[col - 5] == -1)
 				col = e->texture[col][TEXSIZE];
 			else
 				col = 0xFFFFFF;	
-			if (wmap[j][i] != 0)
-				put_pixel_img_mini(e,   i * 5 ,j * 5, col, 5);
+			if (e->world_map[j][i] != 0)
+				put_pixel_img_mini(e,j * 5, i * 5, col, 5);
 			else
-				put_pixel_img_mini(e, i * 5 ,j * 5, 0, 5);
+				put_pixel_img_mini(e,j * 5, i * 5 , 0, 5);
 		}
 	}
 	put_pixel_img_mini(e,(int)(e->posX + 0.5) * 5,  (int)(e->posY + 0.5) * 5,0xFE00FF, 5);

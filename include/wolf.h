@@ -101,12 +101,15 @@ typedef struct		s_env
 	t_img			*img_l;
 	t_img			*img;
 	double			zoom;
+	int				*values;
+	int				**world_map;
 	int				**texture;
 	unsigned int	**buffer;
 	unsigned int	flags;
 	double			posX;
 	int				past;
 	int				cur_sec;
+	int				last_color;
 	double			posY;
 	double			dirX;
 	double			dirY;
@@ -119,8 +122,8 @@ typedef struct		s_env
 	double			rot_speed;
 	double			fps;
 }					t_env;
-extern int values[16]; //= {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-extern int worldMap[mapHeight][mapWidth];
+// extern int values[16]; //= {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+// extern int worldMap[mapHeight][mapWidth];
 
 int	main(void);
 t_env	*init_environment(void);
@@ -134,7 +137,8 @@ int redraw_game(t_env *e);
 int expose_hook(t_env *e);
 int		my_loop_hook(t_env *e);
 void draw_buffer(t_env *e, unsigned int buf[640][800]);
-void draw_map(t_env *e,int wmap[24][24], t_map map);
+void draw_map(t_env *e, t_map map);
 void put_pixel_img_mini(t_env *e, int i, int j, int color, int n);
+int get_array(int a, int b, int c, int d, int e);
 
 #endif
