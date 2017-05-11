@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "wolf.h"
-#define TEXSIZE 64
+
 
 int worldMap[mapWidth][mapHeight]=
 {
@@ -19,30 +19,32 @@ int worldMap[mapWidth][mapHeight]=
   {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
   {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
   {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
-  {2,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,4},
-  {2,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,4},
-  {2,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,4},
-  {2,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,4},
-  {2,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,4},
-  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,5,0,0,0,0,6,0,0,0,0,7,0,0,0,0,8,0,0,0,4},
   {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
   {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
-  {2,0,0,0,0,0,6,6,6,6,6,0,0,0,0,0,0,0,0,0,0,0,0,4},
-  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,0,0,4},
-  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,4},
-  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,5,0,0,0,4},
-  {2,4,4,4,4,4,4,4,4,0,0,0,0,0,0,7,0,0,0,0,0,0,0,4},
-  {2,4,0,4,0,0,0,0,4,0,0,0,0,0,0,7,0,0,0,0,0,0,0,4},
-  {2,4,0,0,0,0,5,0,4,0,0,0,0,0,0,7,0,0,0,0,0,0,0,4},
-  {2,4,0,4,0,0,0,0,4,0,0,0,0,0,0,7,0,0,0,0,0,0,0,4},
-  {2,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
-  {2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
-  {2,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,9,0,0,0,0,10,0,0,0,0,11,0,0,0,0,12,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,17,0,0,0,0,13,0,0,0,0,16,0,0,0,0,19,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,14,0,0,0,0,15,0,0,0,0,20,0,0,0,0,18,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
+  {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
   {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
 };
 
-
+int values[16] = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 // int e->texture[8][TEXSIZE * TEXSIZE];
+
+int last_color = 0;
 int colors[6] ={0, 0x7F0000, 0x7F00, 0x7F, 0x7F7F7F, 0x7F7F};
 int shade[6]= {0, 0xFF0000,  0xFF00, 0xFF, 0xFFFFFF, 0xFFFF};
 // void			hs_clock_darwin_gettime(struct timespec *ts)
@@ -102,9 +104,9 @@ int **malloc_texture()
 	int i;
 	int **temp;
 
-	temp = (int**)malloc(sizeof(int*) * 8);
+	temp = (int**)malloc(sizeof(int*) * 21);
 	i = -1;
-	while (++i < 8)
+	while (++i < 21)
 		temp[i] = (int*)malloc(sizeof(int) * TEXSIZE * TEXSIZE);
 	return (temp);
 }
@@ -126,13 +128,26 @@ int **set_textures()
 			int ycolor = y * 256 / TEXSIZE;
 			int xycolor = y * 128 / TEXSIZE + x * 128 / TEXSIZE;
 			dest[0][TEXSIZE * y + x] = 65536 * 254 * (x != y && x != TEXSIZE - y); //flat red e->texture with black cross
-			dest[1][TEXSIZE * y + x] = 128 + 240 * 128 + 65536 * 128; //sloped greyscale128 + 240 * 128 + 65536 * 128;
+			dest[1][TEXSIZE * y + x] = 254 * xycolor + 65536 * xycolor; //sloped greyscale128 + 240 * 128 + 65536 * 128;
 			dest[2][TEXSIZE * y + x] = xorcolor + 252 * xorcolor + 65536 * xorcolor; //sloped yellow gradientxorcolor + 252 * xorcolor + 65536 * xorcolor; 
 			dest[3][TEXSIZE * y + x] = xorcolor + 128 * xorcolor + 65530 * xorcolor; //xor greyscale254 * xycolor + 65536 * xycolor;
 			dest[4][TEXSIZE * y + x] = xycolor + 256 * xycolor + 65536 * xycolor; //xor greenxycolor + 256 * xycolor + 65536 * xycolor;
-			dest[5][TEXSIZE * y + x] = 65536 * 192 * (x % 16 && y % 16); //red bricks
-			dest[6][TEXSIZE * y + x] = 254 * xycolor + 65536 * xycolor; //red gradient254 * xycolor + 65536 * xycolor;
-			dest[7][TEXSIZE * y + x] = 256 * xorcolor; //flat grey e->texture
+			dest[5][TEXSIZE * y + x] = 0XFF1493;//0xFFFFFF;//65536 * 192 * (x % 16 && y % 16); //red bricks
+			dest[6][TEXSIZE * y + x] = 0X8B4513;//254 * xycolor + 65536 * xycolor; //red gradient254 * xycolor + 65536 * xycolor;
+			dest[7][TEXSIZE * y + x] = 0X9932CC;//256 * xorcolor; //flat grey e->texture
+			dest[8][TEXSIZE * y + x] = 	0X006400;
+			dest[9][TEXSIZE * y + x] = 0X00FFFF;
+			dest[10][TEXSIZE * y + x] = 0X00008B;
+			dest[11][TEXSIZE * y + x] = 0xDC143C;
+			dest[12][TEXSIZE * y + x] = 0XF0FFFF;
+			dest[13][TEXSIZE * y + x] = 0XFF1493;//0xFFFFFF;//65536 * 192 * (x % 16 && y % 16); //red bricks
+			dest[14][TEXSIZE * y + x] = 0X8B4513;//254 * xycolor + 65536 * xycolor; //red gradient254 * xycolor + 65536 * xycolor;
+			dest[15][TEXSIZE * y + x] = 0X9932CC;//256 * xorcolor; //flat grey e->texture
+			dest[16][TEXSIZE * y + x] = 0X006400;
+			dest[17][TEXSIZE * y + x] = 0X00FFFF;
+			dest[18][TEXSIZE * y + x] = 0X00008B;
+			dest[19][TEXSIZE * y + x] = 0xDC143C;
+			dest[20][TEXSIZE * y + x] = 0XF0FFFF;
 		}
 	}
 	return (dest);
@@ -174,6 +189,9 @@ int	main(void)
 {
 	t_env *e;
 
+	int i = -1;
+	while (++i < 16)
+		values[i] = 1;
 	e = init_environment();
 	e = init_parameters(e);
 	redraw_game(e);
@@ -260,7 +278,12 @@ void fill_texture_buffer(t_map map,t_env *e, int x)
 	{
 		d = y * 256 - HEIGHT * 128 + map.line_height * 128;
 		map.tex_y = ((d * TEXSIZE) / map.line_height) / 256;
-		map.color = e->texture[map.tex_num][TEXSIZE * map.tex_y + map.tex_x];
+		if (map.tex_num < 5 || (last_color == map.tex_num  && last_color > 4 && values[last_color - 5] < 0))
+		{
+			map.color = e->texture[map.tex_num][TEXSIZE * map.tex_y + map.tex_x];
+		}
+		else
+			map.color = 0xFFFFFF;
 		if (map.side == 1)
 			map.color = (map.color >> 1) & 8355711;
 		e->buffer[y][x] = map.color;
@@ -350,8 +373,8 @@ void draw_floor(t_map map,t_env *e, int x)
 		cur_fl_y = map.weight * map.floor_y_wall + (1.0 - map.weight) * map.rpy;
 		fl_tx_x = (int)(cur_fl_x * TEXSIZE) % TEXSIZE;
 		fl_tx_y = (int)(cur_fl_y * TEXSIZE) % TEXSIZE;
-		e->buffer[y][x] = (e->texture[3][TEXSIZE * fl_tx_y + fl_tx_x] >> 1) & 8355711;
-		e->buffer[(HEIGHT - y)][  x] = (e->texture[6][TEXSIZE * fl_tx_y + fl_tx_x]);
+		e->buffer[y][x] = (e->texture[4][TEXSIZE * fl_tx_y + fl_tx_x] >> 1) & 8355711;
+		e->buffer[(HEIGHT - y)][  x] = (e->texture[2][TEXSIZE * fl_tx_y + fl_tx_x]);
 	}
 }
 
@@ -411,7 +434,9 @@ int redraw_game(t_env *e)
 			map = check_if_hit(map);
 		map.perp_wall_dist = determine_wall_distance(e, map);
 		map = determine_line_size(map);
-		map.tex_num = worldMap[map.mapX][map.mapY] - 1;
+		map.tex_num = worldMap[map.mapX][map.mapY];
+		if (values[map.tex_num - 5] == 0)
+			worldMap[map.mapX][map.mapY] = 0;
 		map = get_wallx(map);
 		map = get_texture_x(map);
 		fill_texture_buffer(map, e, x);
@@ -478,7 +503,25 @@ int my_key_pressed(int keycode, t_env *e)
 		e->flags |= TRAN_V | SIGN;
 	if (keycode == 49 && worldMap[(int)(e->posX + e->dirX)][(int)(e->posY + e->dirY)] != 0)
 	{
-		worldMap[(int)(e->posX + e->dirX)][(int)(e->posY + e->dirY)] = 0;
+		int cur_col = worldMap[(int)(e->posX + e->dirX)][(int)(e->posY + e->dirY)];
+		if (cur_col > 4 && (cur_col - 5) % 8 == (last_color - 5) % 8 && cur_col != last_color)
+		{
+			values[cur_col - 5] = 0;
+			values[last_color - 5] = 0;
+			last_color = 0;
+		}
+		else if (last_color != 0)
+		{
+			values[last_color - 5] = 1;
+			last_color = 0;
+		}
+		else
+		{
+			// worldMap[(int)(e->posX + e->dirX)][(int)(e->posY + e->dirY)] *= -1;
+			values[cur_col - 5] = -1;
+			last_color = cur_col;
+		}
+		printf("last_color %d\n", last_color);
 		redraw_game(e);
 	}
 
