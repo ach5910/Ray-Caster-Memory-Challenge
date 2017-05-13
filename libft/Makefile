@@ -36,7 +36,7 @@ SRC_BASE = ft_putchar.c ft_putstr.c ft_strcmp.c ft_strlen.c ft_strcpy.c \
 	ft_printf_oct.c ft_printf_ptr.c ft_printf_string.c ft_printf_wstring.c \
 	ft_printf_mod.c ft_printf_uint.c ft_printf_binary.c ft_get_wide_char.c \
 	ft_get_conv_spec.c ft_printf_mod.c ft_padding.c ft_putuint.c \
-	ft_itoa_base.c ft_count_tokens.c\
+	ft_itoa_base.c ft_count_tokens.c ft_strjunct.c \
 
 AR = ar rcs
 

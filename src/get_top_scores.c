@@ -18,7 +18,6 @@ void	get_top_scores(t_env *e)
 	int		fd;
 
 	i = -1;
-	printf("in get scores\n");
 	fd = open("top_scores.txt", O_RDONLY);
 	e->top_scores = (char**)malloc(sizeof(char*) * 10 + 1);
 	while (++i < 10 )
@@ -26,8 +25,6 @@ void	get_top_scores(t_env *e)
 	mlx_string_put(e->mlx, e->win, 315, 350, 16777215, "---TOP SCORES---");
 	i = -1;
 	while (++i < 10)
-		mlx_string_put(e->mlx, e->win, 340, i * 15 + 365, 16777215, e->top_scores[i]);
+		mlx_string_put(e->mlx, e->win, 340, i * 15 + 370, 16777215, e->top_scores[i]);
 	close(fd);
-	printf("before memdel\n");
-	printf("out scores\n");
 }

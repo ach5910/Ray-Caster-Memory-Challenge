@@ -14,8 +14,10 @@
 
 void	move_player(t_env *e, int s)
 {
-	if(e->world_map[(int)((e->posX) + s * e->dirX * e->move_speed)][(int)(e->posY)] == 0)
+	if(e->world_map[(int)((e->posX) + s * e->dirX *
+		e->move_speed)][(int)(e->posY)] == 0)
 		e->posX = e->posX + s * e->dirX * e->move_speed;
-	if(e->world_map[(int)(e->posX)][(int)((e->posY) + s * e->dirY * e->move_speed)] == 0)
+	if(e->world_map[(int)(e->posX)][(int)((e->posY) + s *
+		e->dirY * e->move_speed)] == 0)
 		e->posY = e->posY + s * e->dirY * e->move_speed;
 }

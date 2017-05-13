@@ -16,8 +16,10 @@ int	main(int argc, char **argv)
 {
 	t_env *e;
 
+	if (argc != 2 || !valid_player(argv[1]))
+		return (usage());
 	e = init_environment();
-	e->player = strdup(argv[1]);
+	e->player = ft_strdup(argv[1]);
 	e = init_parameters(e);
 	draw_game_start(e);
 	mlx_expose_hook(e->win, expose_hook, e);

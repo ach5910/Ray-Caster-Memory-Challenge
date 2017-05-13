@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_buffer.c                                     :+:      :+:    :+:   */
+/*   valid_player.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahunt <ach5910@gmail.com>                  +#+  +:+       +#+        */
+/*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/12 10:54:33 by ahunt             #+#    #+#             */
-/*   Updated: 2017/05/12 10:54:41 by ahunt            ###   ########.fr       */
+/*   Created: 2017/05/13 05:22:55 by                   #+#    #+#             */
+/*   Updated: 2017/05/13 05:23:06 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void	clear_buffer(t_env *e)
+int		valid_player(char *player)
 {
-	int i = -1;
-	while (++i < HEIGHT)
+	int len;
+	int i;
+
+	len = ft_strlen(player);
+	if (len < 3 || len > 10)
+		return (0);
+	i = -1;
+	while (player[++i])
 	{
-		int j = -1;
-		while (++j < WIDTH)
-			e->buffer[i][j] = 0;
+		if (!ft_isalpha(player[i]))
+			return (0);
 	}
+	return (1);
 }

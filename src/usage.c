@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hook.c                                             :+:      :+:    :+:   */
+/*   usage.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahunt <ach5910@gmail.com>                  +#+  +:+       +#+        */
+/*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/12 11:02:32 by ahunt             #+#    #+#             */
-/*   Updated: 2017/05/12 11:02:45 by ahunt            ###   ########.fr       */
+/*   Created: 2017/05/13 05:29:15 by                   #+#    #+#             */
+/*   Updated: 2017/05/13 05:29:23 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-int		expose_hook(t_env *e)
+int		usage(void)
 {
-	if (e->game_state & PLAYING)
-		redraw_game(e);
-	return (0);
-}
-
-int		exit_hook(t_env *e)
-{
-	free_environment(e);
-	free_image(e);
-	free_scores(e->top_scores);
-	ft_memdel((void **)&e);
-	exit(EXIT_SUCCESS);
-	return (0); 
+	ft_putendl("usage: ./wolf3D [player's name [a-zA-Z]{3,10}]");
+	return (1);
 }

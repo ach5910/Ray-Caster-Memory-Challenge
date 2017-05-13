@@ -20,16 +20,6 @@ void	free_textures(int **t)
 	ft_memdel((void **)t);
 }
 
-void	free_buffer(unsigned int **b)
-{
-	int i;
-
-	i = -1;
-	while (++i < HEIGHT)
-		ft_memdel((void **)&b[i]);
-	ft_memdel((void **)b);
-}
-
 void free_image(t_env *e)
 {
 	mlx_destroy_image(e->mlx, e->img->i_ptr);
@@ -38,11 +28,20 @@ void free_image(t_env *e)
 	ft_memdel((void**)&e->mlx);
 }
 
+void	free_scores(char **scores)
+{
+	int i;
+
+	i = -1;
+	while (++i < 10)
+		ft_memdel((void **)&scores[i]);
+	ft_memdel((void **)&scores);
+}
+
 void free_environment(t_env *e)
 {
 	free_world_map(e->world_map);
 	ft_memdel((void **)&e->values);
 	free_textures(e->texture);
-	free_buffer(e->buffer);
-
+	ft_memdel((void **)&e->player);
 }

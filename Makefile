@@ -35,10 +35,8 @@ RLIB = ranlib
 RM = rm -rf
 
 SRC_BASE = 	main.c \
-			buffer_to_image.c \
 			calc_distance.c \
 			check_if_hit.c \
-			clear_buffer.c \
 			delta_dist.c \
 			determine_line_size.c \
 			determine_wall_distance.c \
@@ -55,19 +53,22 @@ SRC_BASE = 	main.c \
 			init_map.c \
 			init_mlx.c \
 			init_parameters.c \
-			malloc_buffer.c \
 			malloc_textures.c \
 			move_player.c \
 			my_key_pressed.c \
 			my_loop_hook.c \
 			redraw_game.c \
 			rotate_view.c \
-			s_timer.c \
-			s_timer_access.c \
+			timer.c \
 			update_timer.c \
 			fps.c \
 			get_top_scores.c \
 			draw_game_displays.c \
+			set_top_scores.c \
+			valid_player.c \
+			usage.c \
+			check_for_match.c \
+			randomize_boxes.c \
 
 SRC = $(addprefix src/, $(SRC_BASE))
 
