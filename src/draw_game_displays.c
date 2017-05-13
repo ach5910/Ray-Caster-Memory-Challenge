@@ -29,24 +29,25 @@ void	draw_panel(t_env *e)
 void	draw_game_over(t_env *e)
 {
 	char	*block_bonus;
-	char 	*time_bonus;
+	char	*time_bonus;
 	char	*total_score;
 
 	e->game_state = GAMEOVER;
 	draw_panel(e);
-	block_bonus =ft_itoa_base((size_t)(16 - e->blocks) * 100, 10, 1);
+	block_bonus = ft_itoa_base((size_t)(16 - e->blocks) * 100, 10, 1);
 	time_bonus = ft_itoa_base((size_t)e->time_left * 100, 10, 1);
-	total_score = ft_itoa_base((size_t)((16 - e->blocks) * 100 + e->time_left * 100), 10, 1);
+	total_score = ft_itoa_base((size_t)((16 - e->blocks) *
+		100 + e->time_left * 100), 10, 1);
 	mlx_string_put(e->mlx, e->win, 350, 160, 16777215, "GAME OVER");
 	mlx_string_put(e->mlx, e->win, 300, 200, 16777215, "Block Bonus : ");
 	mlx_string_put(e->mlx, e->win, 450, 200, 16777215, block_bonus);
 	mlx_string_put(e->mlx, e->win, 300, 220, 16777215, "Time Bonus  : ");
 	mlx_string_put(e->mlx, e->win, 450, 220, 16777215, time_bonus);
-	mlx_string_put(e->mlx, e->win, 290, 230, 16777215, 
+	mlx_string_put(e->mlx, e->win, 290, 230, 16777215,
 		"________________________");
 	mlx_string_put(e->mlx, e->win, 300, 250, 16777215, "Final Score : ");
 	mlx_string_put(e->mlx, e->win, 450, 250, 16777215, total_score);
-	mlx_string_put(e->mlx, e->win, 300, 300, 16777215, 
+	mlx_string_put(e->mlx, e->win, 300, 300, 16777215,
 		"**PRESS ESC TO CLOSE**");
 	set_top_scores(e, total_score);
 	ft_memdel((void **)&total_score);
@@ -61,13 +62,13 @@ void	draw_game_start(t_env *e)
 		"WOLF 3D - MEMORY BLOCKS");
 	mlx_string_put(e->mlx, e->win, 290, 110, 16777215,
 		"_______________________");
-	mlx_string_put(e->mlx, e->win, 100, 190, 16777215, 
+	mlx_string_put(e->mlx, e->win, 100, 190, 16777215,
 		"\"Try to find all pairs of matchin blocks before time runs out\"");
-	mlx_string_put(e->mlx, e->win, 100, 240, 16777215, 
+	mlx_string_put(e->mlx, e->win, 100, 240, 16777215,
 		"Use Arrows to rotate player and move forwards and backwards");
-	mlx_string_put(e->mlx, e->win, 100, 255, 16777215, 
+	mlx_string_put(e->mlx, e->win, 100, 255, 16777215,
 		"Press Space Bar while touching block to reveal it's color");
-	mlx_string_put(e->mlx, e->win, 100, 270, 16777215, 
+	mlx_string_put(e->mlx, e->win, 100, 270, 16777215,
 		"Once a pair is found the blocks are removed and time is added");
 	mlx_string_put(e->mlx, e->win, 280, 300, 16777215,
 		"**PRESS SPACE BAR TO START**");

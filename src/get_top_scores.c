@@ -20,11 +20,12 @@ void	get_top_scores(t_env *e)
 	i = -1;
 	fd = open("top_scores.txt", O_RDONLY);
 	e->top_scores = (char**)malloc(sizeof(char*) * 10);
-	while (++i < 10 )
+	while (++i < 10)
 		get_next_line(fd, &e->top_scores[i]);
 	mlx_string_put(e->mlx, e->win, 315, 350, 16777215, "---TOP SCORES---");
 	i = -1;
 	while (++i < 10)
-		mlx_string_put(e->mlx, e->win, 340, i * 15 + 370, 16777215, e->top_scores[i]);
+		mlx_string_put(e->mlx, e->win, 340, i * 15 + 370,
+			16777215, e->top_scores[i]);
 	close(fd);
 }

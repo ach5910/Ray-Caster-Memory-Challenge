@@ -20,7 +20,7 @@ int		my_key_pressed(int keycode, t_env *e)
 	else if (keycode == 123)
 		e->flags |= TRAN_H | SIGN;
 	else if (keycode == 126)
-		e->flags |= TRAN_V ;
+		e->flags |= TRAN_V;
 	else if (keycode == 125)
 		e->flags |= TRAN_V | SIGN;
 	else if (keycode == 53)
@@ -29,8 +29,8 @@ int		my_key_pressed(int keycode, t_env *e)
 	{
 		if (e->game_state & START)
 			e->game_state = PLAYING;
-		else if (e->world_map[(int)(e->posX + e->dirX)][(int)(e->posY
-			+ e->dirY)] != 0)
+		else if (e->world_map[(int)(e->pos_x + e->dir_x)][(int)(e->pos_y
+			+ e->dir_y)] != 0)
 			check_for_match(e);
 		redraw_game(e);
 	}

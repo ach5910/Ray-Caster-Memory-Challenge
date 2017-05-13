@@ -16,23 +16,23 @@ t_map	floor_casting(t_map map)
 {
 	if (map.side == 0 && map.ray_dir_x > 0)
 	{
-		map.floor_x_wall = map.mapX;
-		map.floor_y_wall = map.mapY + map.wallx;
+		map.floor_x_wall = map.map_x;
+		map.floor_y_wall = map.map_y + map.wallx;
 	}
 	else if (map.side == 0 && map.ray_dir_x < 0)
 	{
-		map.floor_x_wall = map.mapX + 1.0;
-		map.floor_y_wall = map.mapY + map.wallx;
+		map.floor_x_wall = map.map_x + 1.0;
+		map.floor_y_wall = map.map_y + map.wallx;
 	}
 	else if (map.side == 1 && map.ray_dir_y > 0)
 	{
-		map.floor_x_wall = map.mapX + map.wallx;
-		map.floor_y_wall = map.mapY;
+		map.floor_x_wall = map.map_x + map.wallx;
+		map.floor_y_wall = map.map_y;
 	}
 	else
 	{
-		map.floor_x_wall = map.mapX + map.wallx;
-		map.floor_y_wall = map.mapY + 1.0;
+		map.floor_x_wall = map.map_x + map.wallx;
+		map.floor_y_wall = map.map_y + 1.0;
 	}
 	return (map);
 }

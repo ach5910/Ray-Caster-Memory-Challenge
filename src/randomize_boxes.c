@@ -3,29 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   randomize_boxes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <>                                        +#+  +:+       +#+        */
+/*   By: ahunt <ahunt@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/13 08:14:31 by                   #+#    #+#             */
-/*   Updated: 2017/05/13 08:14:44 by                  ###   ########.fr       */
+/*   Created: 2017/05/13 14:38:48 by ahunt             #+#    #+#             */
+/*   Updated: 2017/05/13 14:38:49 by ahunt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
-#include <unistd.h>
-#include <stdlib.h>
 
-int fib(int i)
+int		fib(int i)
 {
-    return i < 2 ? 1 : fib(i-1) + fib(i-2);
+	return (i < 2 ? 1 : fib(i - 1) + fib(i - 2));
 }
 
 int		*randomize_boxes(void)
 {
-	int *temp;
-	int i;
-	int c1;
-	t_timer t;
-	size_t ticks;
+	int		*temp;
+	int		i;
+	int		c1;
+	t_timer	t;
+	size_t	ticks;
 
 	temp = (int*)malloc(sizeof(int) * 16);
 	timer_start(&t);

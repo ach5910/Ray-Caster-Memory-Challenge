@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-void	fill_texture_buffer(t_map map,t_env *e, int x)
+void	fill_texture_buffer(t_map map, t_env *e, int x)
 {
 	int d;
 	int y;
@@ -22,9 +22,10 @@ void	fill_texture_buffer(t_map map,t_env *e, int x)
 	{
 		d = y * 256 - HEIGHT * 128 + map.line_height * 128;
 		map.tex_y = ((d * TEXSIZE) / map.line_height) / 256;
-		if (map.tex_num < 5 || (e->last_color == map.tex_num  &&
+		if (map.tex_num < 5 || (e->last_color == map.tex_num &&
 			e->last_color > 4 && e->values[e->last_color - 5] < 0))
-			map.color = e->texture[map.tex_num][TEXSIZE * map.tex_y + map.tex_x];
+			map.color = e->texture[map.tex_num][TEXSIZE *
+				map.tex_y + map.tex_x];
 		else
 			map.color = 0xFFFFFF;
 		if (map.side == 1)

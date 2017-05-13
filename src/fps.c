@@ -24,7 +24,7 @@ void	fps(t_env *e)
 	{
 		if (e->fps > 0.025)
 			e->fps = 0.025;
-		e->move_speed = e->fps  * 20.0;
+		e->move_speed = e->fps * 20.0;
 		e->rot_speed = e->fps * ((double)M_PI / 0.5);
 	}
 }

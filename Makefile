@@ -69,6 +69,7 @@ SRC_BASE = 	main.c \
 			usage.c \
 			check_for_match.c \
 			randomize_boxes.c \
+			set_floor_variables.c \
 
 SRC = $(addprefix src/, $(SRC_BASE))
 

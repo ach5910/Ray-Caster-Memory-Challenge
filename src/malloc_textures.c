@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   malloc_textures.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahunt <ahunt@student.42.us.org>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/05/13 14:41:11 by ahunt             #+#    #+#             */
+/*   Updated: 2017/05/13 14:41:12 by ahunt            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf.h"
 
-int **malloc_textures()
+int		**malloc_textures(void)
 {
 	int i;
 	int **temp;
@@ -12,12 +24,12 @@ int **malloc_textures()
 	return (temp);
 }
 
-int **set_hidden_textures(int **dest, int x, int y)
+int		**set_hidden_textures(int **dest, int x, int y)
 {
 	dest[5][TEXSIZE * y + x] = 0XFF1493;
 	dest[6][TEXSIZE * y + x] = 0X8B4513;
 	dest[7][TEXSIZE * y + x] = 0X9932CC;
-	dest[8][TEXSIZE * y + x] = 	0X006400;
+	dest[8][TEXSIZE * y + x] = 0X006400;
 	dest[9][TEXSIZE * y + x] = 0X00FFFF;
 	dest[10][TEXSIZE * y + x] = 0X00008B;
 	dest[11][TEXSIZE * y + x] = 0xDC143C;
@@ -50,7 +62,7 @@ void	set_tex_colors(t_tex_colors *tc, int x, int y)
 	tc->transition_color = (cr << 16) | (cg << 8) | cb;
 }
 
-int **set_textures(void)
+int		**set_textures(void)
 {
 	int				x;
 	int				y;
@@ -72,22 +84,6 @@ int **set_textures(void)
 			dest[3][TEXSIZE * y + x] = tc.xorcolor + 128 * tc.xorcolor +
 				65536 * tc.xorcolor;
 			dest[4][TEXSIZE * y + x] = 0xFF3300 * (x != y && x != TEXSIZE - y);
-			// dest[5][TEXSIZE * y + x] = 0XFF1493;
-			// dest[6][TEXSIZE * y + x] = 0X8B4513;
-			// dest[7][TEXSIZE * y + x] = 0X9932CC;
-			// dest[8][TEXSIZE * y + x] = 	0X006400;
-			// dest[9][TEXSIZE * y + x] = 0X00FFFF;
-			// dest[10][TEXSIZE * y + x] = 0X00008B;
-			// dest[11][TEXSIZE * y + x] = 0xDC143C;
-			// dest[12][TEXSIZE * y + x] = 0XADFF2F;
-			// dest[13][TEXSIZE * y + x] = 0XFF1493;
-			// dest[14][TEXSIZE * y + x] = 0X8B4513;
-			// dest[15][TEXSIZE * y + x] = 0X9932CC;
-			// dest[16][TEXSIZE * y + x] = 0X006400;
-			// dest[17][TEXSIZE * y + x] = 0X00FFFF;
-			// dest[18][TEXSIZE * y + x] = 0X00008B;
-			// dest[19][TEXSIZE * y + x] = 0xDC143C;
-			// dest[20][TEXSIZE * y + x] = 0XADFF2F;
 			dest = set_hidden_textures(dest, x, y);
 		}
 	}

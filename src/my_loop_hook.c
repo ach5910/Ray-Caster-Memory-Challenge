@@ -23,12 +23,12 @@ int		my_loop_hook(t_env *e)
 		if (e->flags & TRAN_V)
 			move_player(e, -1);
 		else if (e->flags & TRAN_H)
-			rotate_view(e, e->dirX, e->planeX, 1);
+			rotate_view(e, e->dir_x, e->plane_x, 1);
 	}
 	else if (e->flags & TRAN_V)
 		move_player(e, 1);
 	else if (e->flags & TRAN_H)
-		rotate_view(e, e->dirX, e->planeX, -1);
+		rotate_view(e, e->dir_x, e->plane_x, -1);
 	if (e->flags)
 	{
 		e->flags = 0;

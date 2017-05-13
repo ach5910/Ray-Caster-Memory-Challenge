@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hook.c                                             :+:      :+:    :+:   */
+/*   set_floor_variables.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahunt <ach5910@gmail.com>                  +#+  +:+       +#+        */
+/*   By: ahunt <ahunt@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/12 11:02:32 by ahunt             #+#    #+#             */
-/*   Updated: 2017/05/12 11:02:45 by ahunt            ###   ########.fr       */
+/*   Created: 2017/05/13 14:44:40 by ahunt             #+#    #+#             */
+/*   Updated: 2017/05/13 14:44:53 by ahunt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-int		expose_hook(t_env *e)
+t_map	set_floor_variables(t_map map)
 {
-	if (e->game_state & PLAYING)
-		redraw_game(e);
-	return (0);
-}
-
-int		exit_hook(t_env *e)
-{
-	free_environment(e);
-	free_image(e);
-	free_scores(e->top_scores);
-	ft_memdel((void **)&e);
-	exit(EXIT_SUCCESS);
-	return (0);
+	map.dist_wall = map.perp_wall_dist;
+	map.dist_player = 0.0;
+	map.draw_end = map.draw_end < 0 ? HEIGHT : map.draw_end;
+	return (map);
 }

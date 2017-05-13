@@ -28,8 +28,8 @@ void	clear_timer_box(t_env *e)
 
 void	update_timer(t_env *e)
 {
-	int ticks;
-	char *tmp;
+	int		ticks;
+	char	*tmp;
 
 	if (is_started(&e->timer) == 0)
 		timer_start(&e->timer);

@@ -14,8 +14,8 @@
 
 int		redraw_game(t_env *e)
 {
-	t_map map;
-	int x;
+	t_map	map;
+	int		x;
 
 	x = -1;
 	while (++x < WIDTH)
@@ -26,16 +26,14 @@ int		redraw_game(t_env *e)
 			map = check_if_hit(map, e);
 		map.perp_wall_dist = determine_wall_distance(e, map);
 		map = determine_line_size(map);
-		map.tex_num = e->world_map[map.mapX][map.mapY];
+		map.tex_num = e->world_map[map.map_x][map.map_y];
 		if (map.tex_num > 4 && e->values[map.tex_num - 5] == 0)
-			e->world_map[map.mapX][map.mapY] = 0;
+			e->world_map[map.map_x][map.map_y] = 0;
 		map = get_wallx(map);
 		map = get_texture_x(map);
 		fill_texture_buffer(map, e, x);
 		map = floor_casting(map);
-		map.dist_wall = map.perp_wall_dist;
-		map.dist_player = 0.0;
-		map.draw_end = map.draw_end < 0 ? HEIGHT : map.draw_end;
+		map = set_floor_variables(map);
 		draw_floor(map, e, x);
 	}
 	draw_map(e, map);

@@ -12,13 +12,13 @@
 
 #include "wolf.h"
 
-void	draw_floor(t_map map,t_env *e, int x)
+void	draw_floor(t_map map, t_env *e, int x)
 {
-	int y;
-	double cur_fl_x;
-	double cur_fl_y;
-	int fl_tx_x;
-	int	fl_tx_y;
+	int		y;
+	double	cur_fl_x;
+	double	cur_fl_y;
+	int		fl_tx_x;
+	int		fl_tx_y;
 
 	y = map.draw_end;
 	while (++y < HEIGHT)
@@ -27,9 +27,9 @@ void	draw_floor(t_map map,t_env *e, int x)
 		map.weight = (map.cur_dist - map.dist_player) /
 			(map.dist_wall - map.dist_player);
 		cur_fl_x = map.weight * map.floor_x_wall +
-			(1.0 - map.weight) * e->posX;
+			(1.0 - map.weight) * e->pos_x;
 		cur_fl_y = map.weight * map.floor_y_wall +
-			(1.0 - map.weight) * e->posY;
+			(1.0 - map.weight) * e->pos_y;
 		fl_tx_x = (int)(cur_fl_x * TEXSIZE) % TEXSIZE;
 		fl_tx_y = (int)(cur_fl_y * TEXSIZE) % TEXSIZE;
 		put_pixel_img(e, x, y, (e->texture[0][TEXSIZE * fl_tx_y +

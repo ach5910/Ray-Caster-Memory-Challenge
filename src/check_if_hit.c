@@ -17,16 +17,16 @@ t_map	check_if_hit(t_map map, t_env *e)
 	if (map.side_dist_x < map.side_dist_y)
 	{
 		map.side_dist_x += map.delta_x;
-		map.mapX += map.step_x;
+		map.map_x += map.step_x;
 		map.side = 0;
 	}
 	else
 	{
 		map.side_dist_y += map.delta_y;
-		map.mapY += map.step_y;
+		map.map_y += map.step_y;
 		map.side = 1;
 	}
-	if (e->world_map[map.mapX][map.mapY] > 0) 
+	if (e->world_map[map.map_x][map.map_y] > 0)
 		map.hit = 1;
 	return (map);
 }

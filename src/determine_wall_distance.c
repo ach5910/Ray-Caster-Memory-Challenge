@@ -15,7 +15,7 @@
 double	determine_wall_distance(t_env *e, t_map map)
 {
 	if (map.side == 0)
-		return ((map.mapX - map.rpx + (1 - map.step_x) / 2) / map.ray_dir_x);
+		return ((map.map_x - map.rpx + (1 - map.step_x) / 2) / map.ray_dir_x);
 	else
-		return ((map.mapY - map.rpy + (1 - map.step_y) / 2) / map.ray_dir_y);
+		return ((map.map_y - map.rpy + (1 - map.step_y) / 2) / map.ray_dir_y);
 }

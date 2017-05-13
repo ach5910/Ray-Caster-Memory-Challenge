@@ -42,13 +42,13 @@ t_env	*init_grid(t_env *e)
 	int i;
 	int j;
 
-	e->world_map = (int**)malloc(sizeof(int*) * mapWidth + 1);
+	e->world_map = (int**)malloc(sizeof(int*) * MAPWIDTH + 1);
 	i = -1;
-	while (++i < mapWidth)
+	while (++i < MAPWIDTH)
 	{
-		e->world_map[i] = (int*)malloc(sizeof(int) * mapHeight + 1);
+		e->world_map[i] = (int*)malloc(sizeof(int) * MAPHEIGHT + 1);
 		j = -1;
-		while (++j < mapHeight)
+		while (++j < MAPHEIGHT)
 		{
 			if (i == 0)
 				e->world_map[i][j] = 2;
