@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahunt <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ahunt <ach5910@gmail.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/16 08:29:09 by ahunt             #+#    #+#             */
-/*   Updated: 2017/01/16 08:29:12 by ahunt            ###   ########.fr       */
+/*   Created: 2017/05/12 11:02:32 by ahunt             #+#    #+#             */
+/*   Updated: 2017/05/12 11:02:45 by ahunt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-int	main(void)
+int		expose_hook(t_env *e)
 {
-	t_env *e;
-
-	e = init_environment();
-	e = init_parameters(e);
 	redraw_game(e);
-	mlx_expose_hook(e->win, expose_hook, e);
-	mlx_hook(e->win, 2, 0, my_key_pressed, e);
-	mlx_loop_hook(e->mlx, my_loop_hook, e);
-	mlx_hook(e->win, 17, 0, exit_hook, e);
-	mlx_loop(e->mlx);
 	return (0);
+}
+
+int		exit_hook(t_env *e)
+{
+	free_environment(e);
+	free_image(e);
+	ft_memdel((void **)&e);
+	exit(EXIT_SUCCESS);
+	return (0); 
 }

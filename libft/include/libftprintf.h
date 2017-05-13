@@ -83,7 +83,7 @@ unsigned char		*ft_get_wc(wchar_t c);
 size_t				ft_get_bytes_wc(wchar_t c);
 intmax_t			ft_get_int_length(va_list *ap, t_fmt **args);
 uintmax_t			ft_get_uint_length(va_list *ap, t_fmt **args);
-char				*ft_itoa_base(uintmax_t value, int base, int is_uppper);
-uintmax_t			ft_pow(int base, int i);
+char				*ft_itoa_base(size_t value, int base, int is_uppper);
+size_t			ft_pow(int base, int i);
 
 #endif

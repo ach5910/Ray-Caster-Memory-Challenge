@@ -14,6 +14,7 @@
 # define WOLF_H
 # include "libft.h"
 # include "mlx.h"
+# include "s_timer.h"
 # include <math.h>
 #include <time.h>
 #include <stdio.h>
@@ -98,9 +99,7 @@ typedef struct		s_env
 {
 	void			*mlx;
 	void			*win;
-	t_img			*img_l;
 	t_img			*img;
-	double			zoom;
 	int				*values;
 	int				**world_map;
 	int				**texture;
@@ -108,37 +107,73 @@ typedef struct		s_env
 	unsigned int	flags;
 	double			posX;
 	int				past;
-	int				cur_sec;
 	int				last_color;
 	double			posY;
 	double			dirX;
 	double			dirY;
-	double			old_time;
-	double			cur_time;
-	double			frame_time;
 	double			planeX;
 	double			planeY;
 	double			move_speed;
 	double			rot_speed;
 	double			fps;
+	int				timer;
+	int				time_left;
+	int				blocks;
 }					t_env;
 // extern int values[16]; //= {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 // extern int worldMap[mapHeight][mapWidth];
 
-int	main(void);
 t_env	*init_environment(void);
+t_env	*init_parameters(t_env *e);
+t_env	*init_grid(t_env *e);
 t_img	*init_image(t_env *e);
+
+t_map	init_map(t_env *e, int x);
+t_map	check_if_hit(t_map map, t_env *e);
+t_map	determine_line_size(t_map map);
+t_map	calc_distances(t_env *e, t_map map);
+t_map	floor_casting(t_map map);
+t_map	get_wallx(t_map map);
+t_map	get_texture_x(t_map map);
+
+void	fill_texture_buffer(t_map map,t_env *e, int x);
+void	free_environment(t_env *e);
 void    verLine(t_env *e, int x, int drawStart, int drawEnd, int color);
 void    draw_lines_y(t_env *e, t_vec2 *p1, t_vec2 * p2, int color);
 void    put_pixel_img(t_env *e, int i, int j, int color);
+void	buffer_to_image(t_env *e, int x);
+void	clear_buffer(t_env *e);
+void	draw_floor(t_map map,t_env *e, int x);
+void	rotate_view(t_env *e, double dir_x, double plane_x, int s);
+void	move_player(t_env *e, int s);
+void	draw_map(t_env *e, t_map map);
+void	put_pixel_img_mini(t_env *e, int i, int j, int color, int n);
+void	update_timer(t_env *e);
+void	fps(t_env *e);
+
+
 t_line	*get_line_params_y(t_env *e, t_vec2 *p1, t_vec2 *p2);
-int my_key_pressed(int k, t_env *e);
-int redraw_game(t_env *e);
-int expose_hook(t_env *e);
+
+int		main(void);
+int		my_key_pressed(int keycode, t_env *e);
+int		**malloc_textures();
+int		**set_textures(void);
+int		*init_box_states(void);
+int		my_key_pressed(int k, t_env *e);
+int		redraw_game(t_env *e);
+int		expose_hook(t_env *e);
 int		my_loop_hook(t_env *e);
-void draw_buffer(t_env *e, unsigned int buf[640][800]);
-void draw_map(t_env *e, t_map map);
-void put_pixel_img_mini(t_env *e, int i, int j, int color, int n);
-int get_array(int a, int b, int c, int d, int e);
+int		exit_hook(t_env *e);
+int		get_array(int a, int b, int c, int d, int e);
+int		redraw_game(t_env *e);
+int		exit_hook(t_env *e);
+int		expose_hook(t_env *e);
+int		my_loop_hook(t_env *e);
+
+double	determine_wall_distance(t_env *e, t_map map);
+double	delta_dist_y(double ray_dir_y, double ray_dir_x);
+double	delta_dist_x(double ray_dir_y, double ray_dir_x);
+
+unsigned int	**malloc_buffer(void);
 
 #endif

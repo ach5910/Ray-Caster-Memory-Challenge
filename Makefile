@@ -35,8 +35,37 @@ RLIB = ranlib
 RM = rm -rf
 
 SRC_BASE = 	main.c \
-			init_mlx.c \
+			buffer_to_image.c \
+			calc_distance.c \
+			check_if_hit.c \
+			clear_buffer.c \
+			delta_dist.c \
+			determine_line_size.c \
+			determine_wall_distance.c \
 			draw.c \
+			draw_floor.c \
+			fill_texture_buffer.c \
+			floor_casting.c \
+			free_memory.c \
+			get_texture_x.c \
+			get_wallx.c \
+			hook.c \
+			init_box_states.c \
+			init_grid.c \
+			init_map.c \
+			init_mlx.c \
+			init_parameters.c \
+			malloc_buffer.c \
+			malloc_textures.c \
+			move_player.c \
+			my_key_pressed.c \
+			my_loop_hook.c \
+			redraw_game.c \
+			rotate_view.c \
+			s_timer.c \
+			s_timer_access.c \
+			update_timer.c \
+			fps.c \
 
 SRC = $(addprefix src/, $(SRC_BASE))
 
@@ -51,10 +80,6 @@ $(OBJ): | obj
 
 obj:
 	mkdir -p $@
-	mkdir -p $@/color_mapping
-
-obj/color_mapping/%.o: src/color_mapping/%.c
-	$(CC) $(CFLAGS) -o $@ -c $<
 
 obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -o $@ -c $<
