@@ -28,22 +28,20 @@ void	draw_panel(t_env *e)
 
 void	draw_game_over(t_env *e)
 {
-	size_t	block_bonus;
-	size_t 	time_bonus;
+	char	*block_bonus;
+	char 	*time_bonus;
 	char	*total_score;
 
 	e->game_state = GAMEOVER;
 	draw_panel(e);
-	block_bonus = (size_t)(16 - e->blocks) * 100;
-	time_bonus = (size_t)e->time_left * 100;
-	total_score = ft_itoa_base(block_bonus + time_bonus, 10, 1);
+	block_bonus =ft_itoa_base((size_t)(16 - e->blocks) * 100, 10, 1);
+	time_bonus = ft_itoa_base((size_t)e->time_left * 100, 10, 1);
+	total_score = ft_itoa_base((size_t)((16 - e->blocks) * 100 + e->time_left * 100), 10, 1);
 	mlx_string_put(e->mlx, e->win, 350, 160, 16777215, "GAME OVER");
 	mlx_string_put(e->mlx, e->win, 300, 200, 16777215, "Block Bonus : ");
-	mlx_string_put(e->mlx, e->win, 450, 200, 16777215, 
-		ft_itoa_base(block_bonus, 10, 1));
+	mlx_string_put(e->mlx, e->win, 450, 200, 16777215, block_bonus);
 	mlx_string_put(e->mlx, e->win, 300, 220, 16777215, "Time Bonus  : ");
-	mlx_string_put(e->mlx, e->win, 450, 220, 16777215, 
-		ft_itoa_base(time_bonus, 10, 1));
+	mlx_string_put(e->mlx, e->win, 450, 220, 16777215, time_bonus);
 	mlx_string_put(e->mlx, e->win, 290, 230, 16777215, 
 		"________________________");
 	mlx_string_put(e->mlx, e->win, 300, 250, 16777215, "Final Score : ");
@@ -52,6 +50,8 @@ void	draw_game_over(t_env *e)
 		"**PRESS ESC TO CLOSE**");
 	set_top_scores(e, total_score);
 	ft_memdel((void **)&total_score);
+	ft_memdel((void **)&block_bonus);
+	ft_memdel((void **)&time_bonus);
 }
 
 void	draw_game_start(t_env *e)

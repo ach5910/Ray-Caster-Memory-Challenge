@@ -3,8 +3,8 @@
 13900 - Squanch
 13000 - Slash
 10100 - Trump
+9900 - MunchBox
+8600 - Morty
 8500 - Batman
-800 - Matt
-600 - Mark
-600 - Mark
-500 - Aaron
+5200 - Lou
+4700 - Cher

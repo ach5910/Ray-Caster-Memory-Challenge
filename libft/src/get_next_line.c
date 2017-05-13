@@ -40,13 +40,7 @@ static int	parse_newline(char **mem, char *buffer, char **line)
 	if ((nl_ptr = ft_strchr(buffer, '\n')))
 	{
 		*nl_ptr = '\0';
-		if (*mem)
-		{
-			*line = ft_strjoin(*mem, buffer);
-			free(*mem);
-		}
-		else
-			*line = ft_strdup(buffer);
+		*line = ft_strapp(*mem, buffer);
 		*mem = ft_strdup(nl_ptr + 1);
 		ft_strdel(&buffer);
 		return (1);
@@ -60,17 +54,18 @@ int			get_next_line(const int fd, char **line)
 	char		*buffer;
 	int			size_read;
 
-	buffer = ft_strnew(BUFF_SIZE);
+	
 	if (line == NULL || fd < 0)
 		return (-1);
 	if (mem && read_memory(&mem, line, 0))
 		return (1);
+	buffer = ft_strnew(BUFF_SIZE);
 	while ((size_read = read(fd, buffer, BUFF_SIZE)) > 0)
 	{
 		buffer[size_read] = '\0';
 		if (parse_newline(&mem, buffer, line))
 			return (1);
-		mem = mem != NULL ? ft_strjoin(mem, buffer) : ft_strdup(buffer);
+		mem = ft_strpre(mem, buffer);
 	}
 	ft_strdel(&buffer);
 	if (size_read == -1)

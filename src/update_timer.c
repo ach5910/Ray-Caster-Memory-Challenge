@@ -29,11 +29,16 @@ void	clear_timer_box(t_env *e)
 void	update_timer(t_env *e)
 {
 	int ticks;
+	char *tmp;
 
 	if (is_started(&e->timer) == 0)
 		timer_start(&e->timer);
 	ticks = (int)(get_ticks(&e->timer) / 1000);
 	clear_timer_box(e);
 	e->time_left = e->time - ticks;
-	mlx_string_put(e->mlx, e->win, 750, 25, 16777215, ft_itoa_base((size_t)(e->time_left), 10, 1));
+	tmp = ft_itoa_base((size_t)(e->time_left), 10, 1);
+	mlx_string_put(e->mlx, e->win, 750, 25, 16777215, tmp);
+	ft_memdel((void **)&tmp);
+	if (e->time_left < 1)
+		draw_game_over(e);
 }

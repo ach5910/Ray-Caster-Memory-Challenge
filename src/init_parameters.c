@@ -12,7 +12,7 @@ t_env *init_parameters(t_env *e)
 	e->move_speed = 0.016666 * 3 ;
 	e->fps = 0.0f;
 	e->last_color = 0;
-	e->time = 150;
+	e->time = 100;
 	e->blocks = 16;
 	e->time_left = 20;
 	e->game_state = START;
