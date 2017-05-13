@@ -25,7 +25,7 @@ void	free_buffer(unsigned int **b)
 	int i;
 
 	i = -1;
-	while (++i < HEIGHT + 1)
+	while (++i < HEIGHT)
 		ft_memdel((void **)&b[i]);
 	ft_memdel((void **)b);
 }

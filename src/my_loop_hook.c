@@ -14,9 +14,14 @@
 
 int		my_loop_hook(t_env *e)
 {
-	if (e->blocks < 2)
+	if (e->game_state != PLAYING)
+		return (0);
+	printf("pasting not playing\n");
+	if ((e->blocks < 2 || e->time_left < 1))
 	{
-		free_environment(e);
+		e->game_state = GAMEOVER;
+		D_TIMER(stop)(&e->timer);
+		// free_environment(e);
 		draw_game_over(e);
 	}
 	if (e->fps >= 1 / 60.0f)

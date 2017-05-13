@@ -28,13 +28,12 @@ void	clear_timer_box(t_env *e)
 
 void	update_timer(t_env *e)
 {
-	static t_timer timer;
 	int ticks;
 
-	if (D_TIMER(is_started)(&timer) == false)
-		D_TIMER(start)(&timer);
-	ticks = (int)(D_TIMER(get_ticks)(&timer) / 1000);
+	if (D_TIMER(is_started)(&e->timer) == false)
+		D_TIMER(start)(&e->timer);
+	ticks = (int)(D_TIMER(get_ticks)(&e->timer) / 1000);
 	clear_timer_box(e);
-	e->time_left = e->timer - ticks;
+	e->time_left = e->time - ticks;
 	mlx_string_put(e->mlx, e->win, 750, 25, 16777215, ft_itoa_base((size_t)(e->time_left), 10, 1));
 }

@@ -27,31 +27,49 @@ int		my_key_pressed(int keycode, t_env *e)
 	{
 		free_environment(e);
 		free_image(e);
+		free_scores(e);
 		ft_memdel((void **)&e);
 		exit(EXIT_SUCCESS);
 	}
-	if (keycode == 49 && e->world_map[(int)(e->posX + e->dirX)][(int)(e->posY + e->dirY)] != 0)
+	else if (keycode == 49)
 	{
-		int cur_col = e->world_map[(int)(e->posX + e->dirX)][(int)(e->posY + e->dirY)];
-		if (cur_col > 4 && (cur_col - 5) % 8 == (e->last_color - 5) % 8 && cur_col != e->last_color)
+		if (e->game_state & START)
 		{
-			e->values[cur_col - 5] = 0;
-			e->values[e->last_color - 5] = 0;
-			e->last_color = 0;
-			e->timer += 15;
-			e->blocks -= 2;
+			printf("start bar listener\n");
+			e->game_state = PLAYING;
+			redraw_game(e);
 		}
-		else if (e->last_color != 0)
+		else if (e->game_state & GAMEOVER)
 		{
-			e->values[e->last_color - 5] = 1;
-			e->last_color = 0;
+			printf("GAMEOVER\n");
+			init_parameters(e);
+			e->game_state = START;
+			draw_game_start(e);
+			printf("after draw_game_start\n");
 		}
-		else
+		else if (e->world_map[(int)(e->posX + e->dirX)][(int)(e->posY + e->dirY)] != 0)
 		{
-			e->values[cur_col - 5] = -1;
-			e->last_color = cur_col;
+			int cur_col = e->world_map[(int)(e->posX + e->dirX)][(int)(e->posY + e->dirY)];
+			if (cur_col > 4 && (cur_col - 5) % 8 == (e->last_color - 5) % 8 && cur_col != e->last_color)
+			{
+				e->values[cur_col - 5] = 0;
+				e->values[e->last_color - 5] = 0;
+				e->last_color = 0;
+				e->time += 15;
+				e->blocks -= 2;
+			}
+			else if (e->last_color != 0)
+			{
+				e->values[e->last_color - 5] = 1;
+				e->last_color = 0;
+			}
+			else
+			{
+				e->values[cur_col - 5] = -1;
+				e->last_color = cur_col;
+			}
+			redraw_game(e);
 		}
-		redraw_game(e);
 	}
 
 	return (0);

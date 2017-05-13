@@ -30,6 +30,9 @@
 # define TRAN_V	0x02
 # define SIGN	0x04
 #define TEXSIZE 64
+# define START	0x01
+# define PLAYING	0x02
+# define GAMEOVER	0x04	
 
 typedef struct		s_vec2
 {
@@ -105,6 +108,7 @@ typedef struct		s_env
 	int				**texture;
 	unsigned int	**buffer;
 	unsigned int	flags;
+	unsigned int	game_state;
 	double			posX;
 	int				past;
 	int				last_color;
@@ -116,9 +120,13 @@ typedef struct		s_env
 	double			move_speed;
 	double			rot_speed;
 	double			fps;
-	int				timer;
+	int				time;
+	t_timer			timer;
 	int				time_left;
 	int				blocks;
+	char			*player;
+	char			**top_scores;
+
 }					t_env;
 // extern int values[16]; //= {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 // extern int worldMap[mapHeight][mapWidth];
@@ -150,11 +158,16 @@ void	draw_map(t_env *e, t_map map);
 void	put_pixel_img_mini(t_env *e, int i, int j, int color, int n);
 void	update_timer(t_env *e);
 void	fps(t_env *e);
+void	get_top_scores(t_env *e);
+void	draw_game_start(t_env *e);
+void	draw_game_over(t_env *e);
+void	free_scores(t_env *e);
+void	free_image(t_env *e);
 
 
 t_line	*get_line_params_y(t_env *e, t_vec2 *p1, t_vec2 *p2);
 
-int		main(void);
+int		main(int argc, char **argv);
 int		my_key_pressed(int keycode, t_env *e);
 int		**malloc_textures();
 int		**set_textures(void);

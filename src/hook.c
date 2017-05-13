@@ -14,7 +14,8 @@
 
 int		expose_hook(t_env *e)
 {
-	redraw_game(e);
+	if (e->game_state & PLAYING)
+		redraw_game(e);
 	return (0);
 }
 
@@ -22,6 +23,7 @@ int		exit_hook(t_env *e)
 {
 	free_environment(e);
 	free_image(e);
+	free_scores(e);
 	ft_memdel((void **)&e);
 	exit(EXIT_SUCCESS);
 	return (0); 

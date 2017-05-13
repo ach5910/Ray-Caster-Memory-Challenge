@@ -66,6 +66,8 @@ SRC_BASE = 	main.c \
 			s_timer_access.c \
 			update_timer.c \
 			fps.c \
+			get_top_scores.c \
+			draw_game_displays.c \
 
 SRC = $(addprefix src/, $(SRC_BASE))
 

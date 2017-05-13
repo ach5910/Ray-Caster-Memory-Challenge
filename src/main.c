@@ -12,13 +12,14 @@
 
 #include "wolf.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_env *e;
 
 	e = init_environment();
+	e->player = strdup(argv[1]);
 	e = init_parameters(e);
-	redraw_game(e);
+	draw_game_start(e);
 	mlx_expose_hook(e->win, expose_hook, e);
 	mlx_hook(e->win, 2, 0, my_key_pressed, e);
 	mlx_loop_hook(e->mlx, my_loop_hook, e);
