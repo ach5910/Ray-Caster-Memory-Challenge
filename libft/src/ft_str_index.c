@@ -12,11 +12,11 @@
 
 #include "libft.h"
 
-int	ft_str_index(const char *str, char c)
+int	ft_str_index(const char *str, char c, int n)
 {
 	int i;
 
-	i = 0;
+	i = n;
 	while (str[i])
 	{
 		if (str[i] == c)

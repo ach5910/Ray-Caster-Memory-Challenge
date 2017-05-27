@@ -14,7 +14,9 @@
 
 void	check_for_match(t_env *e)
 {
-	int cur_col;
+	static int	streak = 0;
+	int 		cur_col;
+
 
 	cur_col = e->world_map[(int)(e->pos_x +
 		e->dir_x)][(int)(e->pos_y + e->dir_y)];
@@ -24,13 +26,16 @@ void	check_for_match(t_env *e)
 		e->values[cur_col - 5] = 0;
 		e->values[e->last_color - 5] = 0;
 		e->last_color = 0;
-		e->time += 15;
+		e->time += 20;
 		e->blocks -= 2;
+		streak++;
+		e->strk_mult = e->strk_mult < streak ? streak : e->strk_mult;
 	}
 	else if (e->last_color != 0)
 	{
 		e->values[e->last_color - 5] = 1;
 		e->last_color = 0;
+		streak = 0;
 	}
 	else
 	{

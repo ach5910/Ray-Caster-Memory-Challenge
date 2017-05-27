@@ -32,7 +32,8 @@ int		my_key_pressed(int keycode, t_env *e)
 		else if (e->world_map[(int)(e->pos_x + e->dir_x)][(int)(e->pos_y
 			+ e->dir_y)] != 0)
 			check_for_match(e);
-		redraw_game(e);
+		if (e->game_state & PLAYING)
+			redraw_game(e);
 	}
 	return (0);
 }

@@ -31,7 +31,7 @@ void	display_top_scores(t_env *e, char *score)
 				16777215, temp);
 		else
 			mlx_string_put(e->mlx, e->win, 340, cnt * 15 + 370,
-				16777215, e->top_scores[i]);
+				16777215, e->top_scores[i++]);
 	}
 	ft_memdel((void **)&temp);
 }

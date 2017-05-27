@@ -26,33 +26,42 @@ void	draw_panel(t_env *e)
 	}
 }
 
+void	calculate_final_score(t_env *e, t_scores *s)
+{
+	int	blk_b;
+	int	tm_b;
+	int	tot_sc;
+
+	blk_b = (16 - e->blocks) * e->strk_mult * 100;
+	tm_b = e->time_left * 100;
+	tot_sc = blk_b + tm_b;
+	s->block_bonus = ft_itoa_base((size_t)blk_b, 10, 1);
+	s->time_bonus = ft_itoa_base((size_t)tm_b, 10, 1);
+	s->total_score = ft_itoa_base((size_t)tot_sc, 10, 1);
+}
+
 void	draw_game_over(t_env *e)
 {
-	char	*block_bonus;
-	char	*time_bonus;
-	char	*total_score;
+	t_scores sc;
 
 	e->game_state = GAMEOVER;
 	draw_panel(e);
-	block_bonus = ft_itoa_base((size_t)(16 - e->blocks) * 100, 10, 1);
-	time_bonus = ft_itoa_base((size_t)e->time_left * 100, 10, 1);
-	total_score = ft_itoa_base((size_t)((16 - e->blocks) *
-		100 + e->time_left * 100), 10, 1);
+	calculate_final_score(e, &sc);
 	mlx_string_put(e->mlx, e->win, 350, 160, 16777215, "GAME OVER");
 	mlx_string_put(e->mlx, e->win, 300, 200, 16777215, "Block Bonus : ");
-	mlx_string_put(e->mlx, e->win, 450, 200, 16777215, block_bonus);
+	mlx_string_put(e->mlx, e->win, 450, 200, 16777215, sc.block_bonus);
 	mlx_string_put(e->mlx, e->win, 300, 220, 16777215, "Time Bonus  : ");
-	mlx_string_put(e->mlx, e->win, 450, 220, 16777215, time_bonus);
+	mlx_string_put(e->mlx, e->win, 450, 220, 16777215, sc.time_bonus);
 	mlx_string_put(e->mlx, e->win, 290, 230, 16777215,
 		"________________________");
 	mlx_string_put(e->mlx, e->win, 300, 250, 16777215, "Final Score : ");
-	mlx_string_put(e->mlx, e->win, 450, 250, 16777215, total_score);
+	mlx_string_put(e->mlx, e->win, 450, 250, 16777215, sc.total_score);
 	mlx_string_put(e->mlx, e->win, 300, 300, 16777215,
 		"**PRESS ESC TO CLOSE**");
-	set_top_scores(e, total_score);
-	ft_memdel((void **)&total_score);
-	ft_memdel((void **)&block_bonus);
-	ft_memdel((void **)&time_bonus);
+	set_top_scores(e, sc.total_score);
+	ft_memdel((void **)&sc.total_score);
+	ft_memdel((void **)&sc.block_bonus);
+	ft_memdel((void **)&sc.time_bonus);
 }
 
 void	draw_game_start(t_env *e)

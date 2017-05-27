@@ -27,6 +27,7 @@ t_env	*init_parameters(t_env *e)
 	e->time = 100;
 	e->blocks = 16;
 	e->time_left = 20;
+	e->strk_mult = 1;
 	e->game_state = START;
 	e->values = init_box_states();
 	e->texture = set_textures();

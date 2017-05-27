@@ -22,9 +22,9 @@ void	fps(t_env *e)
 	e->fps = (double)(end - start) / CLOCKS_PER_SEC;
 	if (e->fps >= 1 / 60.0f)
 	{
-		if (e->fps > 0.025)
-			e->fps = 0.025;
+		if (e->fps > 0.03)
+			e->fps = 0.03;
 		e->move_speed = e->fps * 20.0;
-		e->rot_speed = e->fps * ((double)M_PI / 0.5);
+		e->rot_speed = e->fps * ((double)M_PI / 0.75);
 	}
 }

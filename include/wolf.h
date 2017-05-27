@@ -44,6 +44,13 @@ typedef struct		s_timer
 	struct timeval	start;
 }					t_timer;
 
+typedef struct		s_scores
+{
+	char			*block_bonus;
+	char			*time_bonus;
+	char			*total_score;
+}					t_scores;
+
 typedef struct		s_tex_colors
 {
 	int				xorcolor;
@@ -121,6 +128,7 @@ typedef struct		s_env
 	t_timer			timer;
 	int				time_left;
 	int				blocks;
+	int				strk_mult;
 	char			*player;
 	char			**top_scores;
 }					t_env;
