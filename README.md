@@ -1,4 +1,7 @@
 # Ray-Caster-Memory-Challenge
+- The minilibx library is an OpenGL wrapper library and is supports MacOS. Minilibx it written to also be ported to Linux but
+  the behavior is undefined.
+  
 INSTALLATION
 - Clone repository
 - Run make in root directory
